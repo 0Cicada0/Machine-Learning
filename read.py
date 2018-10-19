@@ -10,10 +10,10 @@ colours = ["Purple", "Red", "Blue", "White", "Black", "Grey", "Yellow", "Green",
 male = ["Male", "Boy", "Man", "male", "boy", "man"]
 female = ["Female", "Girl", "Woman", "female", "girl", "woman"]
 def choose():
-    want = input("Hey, would you like to read or write something?\n").split()
-    if "read" in want:
-        read()
-    elif "write" in want:
+    want = input("Hey, would you like to predict or write something?\n").split()
+    # if "read" in want:
+    #     read()
+    if "write" in want:
         write()
     elif "Write" in want:
         write()
@@ -21,8 +21,8 @@ def choose():
         predicting()
     elif "predict" in want:
         predicting()
-    elif "Read" in want:
-        read()
+    # elif "Read" in want:
+    #     read()
     elif "No" in want:
         print("Goodbye")
     elif "no" in want:
@@ -37,11 +37,11 @@ def write():
     sex = input("What's your gender?\n")
     sex.capitalize()
     if sex in female:
-        sex = 1
-    if sex in male:
-        sex = 0
+        sex = "1"
+    elif sex in male:
+        sex = "0"
     else:
-        sex = 2
+        sex = "2"
     age = input("How old are you?\n")
     # if age != int:
     #     print("Just your age please.")
@@ -65,37 +65,38 @@ def write():
     f.close()
     end()
 
-def read():
-    wantName = input("Who's favorite colour would you like to know?\n")
-    wantName.capitalize()
-    if wantName.endswith('\'s'):
-        wantName = wantName[:-2]
-    elif wantName.endswith('s\''):
-        wantName = wantName[:-2]
-    elif wantName.endswith('s'):
-        wantName = wantName[:-1]
-    with open("Colour.csv") as f:
-        for i in f:
-            if i[3]:
-                for c in colours:
-                    if c.index(colour) == i:
-                        i = c
-                        print(i)
-        for line in f:
-            if wantName in line:
-                print(line)
-    end()
+# def read():
+#     wantName = input("Who's favorite colour would you like to know?\n")
+#     wantName.capitalize()
+#     if wantName.endswith('\'s'):
+#         wantName = wantName[:-2]
+#     elif wantName.endswith('s\''):
+#         wantName = wantName[:-2]
+#     elif wantName.endswith('s'):
+#         wantName = wantName[:-1]
+#     reader = csv.reader(Colour.csv, delimiter=',')
+#     for f in reader:
+#         for i in f:
+#             print(i)
+#             for c in colours:
+#                 if c.index(colour) == i:
+#                     i = c
+#                     print(i)
+#         # for line in f:
+#         #     if wantName in line:
+#         #         print(line)
+#     end()
 
 def end():
-    want = input("Hey, would you like to read or write something?\n").split()
-    if "read" in want:
-        read()
-    elif "write" in want:
+    want = input("Hey, would you like to predict or write something?\n").split()
+    # if "read" in want:
+    #     read()
+    if "write" in want:
         write()
     elif "Write" in want:
         write()
-    elif "Read" in want:
-        read()
+    # elif "Read" in want:
+    #     read()
     elif "yes" in want:
         choose()
     elif "Yes" in want:
@@ -144,6 +145,7 @@ def predicting():
         print("You are a Male.")
     else:
         print("You are a Female.")
-# print("Welcome!")
-# choose()
-predicting()
+
+print("Welcome!")
+choose()
+# predicting()
