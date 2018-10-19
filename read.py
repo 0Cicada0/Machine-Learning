@@ -2,7 +2,7 @@ import csv
 import tflearn
 from tflearn.data_utils import load_csv
 class writeML():
-    def __init__(self):
+    def __init__(self, age, sex, name, colour):
         self.name = "swolo"
         self.colour = "swolo"
         self.wantName = "swolo"
@@ -12,6 +12,10 @@ class writeML():
         self.male = ["Male", "Boy", "Man", "male", "boy", "man"]
         self.female = ["Female", "Girl", "Woman", "female", "girl", "woman"]
         self.predict = None
+        self.age = age
+        self.sex = sex
+        self.name = name
+        self.colour = colour
 
     def go(self):
         print("Welcome!")
@@ -38,18 +42,18 @@ class writeML():
         else:
             print("Error, unable to understand your meaning. Please try again")
             self.choose()
-    def write(self, name, colour, age, sex):
+    def write(self):
         # name = input("What's your name? \n")
-        name.capitalize()
-        print("Hello " + name + "!")
+        self.name.capitalize()
+        print("Hello " + self.name + "!")
         # sex = input("What's your gender?\n")
-        sex.capitalize()
-        if sex in self.female:
-            sex = "1"
-        elif sex in self.male:
-            sex = "0"
+        self.sex.capitalize()
+        if self.sex in self.female:
+            self.sex = "1"
+        elif self.sex in self.male:
+            self.sex = "0"
         else:
-            sex = "2"
+            self.sex = "2"
         # age = input("How old are you?\n")
         # if age != int:
         #     print("Just your age please.")
@@ -58,18 +62,18 @@ class writeML():
         #         print("You Failed.")
         #         return
         # colour = input("What's your favourite colour, %s? \n" %name)
-        colour.capitalize()
-        if colour not in self.colours:
+        self.colour.capitalize()
+        if self.colour not in self.colours:
             print("Sorry, that colour is not in my database, try to be simpler")
-            colour = input("What's your favourite colour, %s? \n" % name)
+            colour = input("What's your favourite colour, %s? \n" % self.name)
             if colour not in self.colours:
                 print("You Failed.")
                 return
-        if colour in self.colours:
-            colourNum = str((self.colours.index(colour)))
+        if self.colour in self.colours:
+            colourNum = str((self.colours.index(self.colour)))
         # print("Nice choice!")
         f = open('Colour.csv', 'a', newline='')
-        f.write("\n" + name + ", " + sex + ", " + age + ", " + colourNum)
+        f.write("\n" + self.name + ", " + self.sex + ", " + self.age + ", " + self.colourNum)
         f.close()
         self.end()
 
@@ -121,21 +125,21 @@ class writeML():
             print("Error, unable to understand your meaning. Please try again")
             self.end()
 
-    def predicting(self, name, colour, age):
+    def predicting(self):
         data, labels = load_csv("Colour.csv", target_column=1, categorical_labels=True, n_classes=2, columns_to_ignore=[0])
         # name = input("What's your name? \n")
-        name.capitalize()
+        self.name.capitalize()
         # colour = input("What's your favourite colour, %s? \n" % name)
-        colour.capitalize()
-        if colour not in self.colours:
+        self.colour.capitalize()
+        if self.colour not in self.colours:
             # print("Sorry, that colour is not in my database, try to be simpler")
-            colour = input("What's your favourite colour, %s? \n" % name)
+            colour = input("What's your favourite colour, %s? \n" % self.name)
             colour.capitalize()
             if colour not in self.colours:
                 # print("You Failed.")
                 return
-        if colour in self.colours:
-            colourNum = str((self.colours.index(colour)))
+        if self.colour in self.colours:
+            colourNum = str((self.colours.index(self.colour)))
         # age = input("How old are you?\n")
 
         net = tflearn.input_data(shape=[None, 2])  # An input layer, with variable input size of examples with 6 features (the [None, 6])
@@ -147,7 +151,7 @@ class writeML():
         model = tflearn.DNN(net)
         model.fit(data, labels, n_epoch=100, batch_size=16, show_metric=True)
 
-        predict = model.predict([[age, colourNum]])[0][0]
+        predict = model.predict([[self.age, colourNum]])[0][0]
         predict = round(predict, 0)
         if predict == 1:
             self.predict = "Male"
