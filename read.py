@@ -1,7 +1,7 @@
 import csv
 import tflearn
 from tflearn.data_utils import load_csv
-class writeML():
+class writeML:
     def __init__(self, age, sex, name, colour):
         self.name = "swolo"
         self.colour = "swolo"
@@ -45,7 +45,7 @@ class writeML():
     def write(self):
         # name = input("What's your name? \n")
         self.name.capitalize()
-        print("Hello " + self.name + "!")
+        # print("Hello " + self.name + "!")
         # sex = input("What's your gender?\n")
         self.sex.capitalize()
         if self.sex in self.female:
@@ -64,18 +64,22 @@ class writeML():
         # colour = input("What's your favourite colour, %s? \n" %name)
         self.colour.capitalize()
         if self.colour not in self.colours:
-            print("Sorry, that colour is not in my database, try to be simpler")
+            # print("Sorry, that colour is not in my database, try to be simpler")
             colour = input("What's your favourite colour, %s? \n" % self.name)
             if colour not in self.colours:
-                print("You Failed.")
+                # print("You Failed.")
                 return
         if self.colour in self.colours:
             colourNum = str((self.colours.index(self.colour)))
         # print("Nice choice!")
+        # str(self.age)
+        # str(colourNum)
+        # str(self.sex)
+        # str(self.name)
         f = open('Colour.csv', 'a', newline='')
-        f.write("\n" + self.name + ", " + self.sex + ", " + self.age + ", " + self.colourNum)
+        f.write("\n" + self.name + ", " + self.sex + ", " + str(self.age) + ", " + colourNum)
         f.close()
-        self.end()
+        # self.end()
 
     # def read():
     #     wantName = input("Who's favorite colour would you like to know?\n")
@@ -152,11 +156,10 @@ class writeML():
         model.fit(data, labels, n_epoch=100, batch_size=16, show_metric=True)
 
         predict = model.predict([[self.age, colourNum]])[0][0]
+        # print(predict)
         predict = round(predict, 0)
         if predict == 1:
             self.predict = "Male"
-            # print("You are a Male.")
+
         else:
             self.predict = "Female"
-            # print("You are a Female.")
-
